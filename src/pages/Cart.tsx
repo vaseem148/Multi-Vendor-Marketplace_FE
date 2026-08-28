@@ -8,9 +8,13 @@ import { useAuth } from '@/store/auth'
 import { useCart } from '@/store/cart'
 
 export function Cart() {
-  const { user } = useAuth()
+  const { user, ready } = useAuth()
   const { cart, loading, setQuantity, remove } = useCart()
   const navigate = useNavigate()
+
+  // /cart sits outside RequireAuth, so wait for hydrate() before deciding the
+  // user is signed out — otherwise a reload flashes the sign-in screen.
+  if (!ready) return <Spinner />
 
   if (!user) {
     return (

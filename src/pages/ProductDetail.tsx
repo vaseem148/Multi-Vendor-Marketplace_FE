@@ -7,6 +7,7 @@ import {
   RotateCcw,
   ShieldCheck,
   ShoppingCart,
+  Star,
   Store,
   Truck,
 } from 'lucide-react'
@@ -447,9 +448,16 @@ function ReviewModal({
                 key={star}
                 onClick={() => setRating(star)}
                 className="transition-transform hover:scale-110"
-                aria-label={`${star} stars`}
+                aria-label={`${star} star${star === 1 ? '' : 's'}`}
               >
-                <Rating value={star <= rating ? 5 : 0} showValue={false} size={26} className="[&>span]:gap-0" />
+                <Star
+                  className={cn(
+                    'size-7',
+                    star <= rating
+                      ? 'fill-[var(--star)] text-[var(--star)]'
+                      : 'fill-transparent text-[var(--border-strong)]',
+                  )}
+                />
               </button>
             ))}
           </div>
