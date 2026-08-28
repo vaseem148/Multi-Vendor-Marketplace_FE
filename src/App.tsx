@@ -9,6 +9,7 @@ import {
   ShopLayout,
   VendorLayout,
 } from '@/components/layout'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Toaster } from '@/components/ui'
 import { useAuth } from '@/store/auth'
 import { useCart } from '@/store/cart'
@@ -45,7 +46,11 @@ import { Wishlist } from '@/pages/Wishlist'
 /** Every navigation starts at the top of the new page. */
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }), [pathname])
+  useEffect(() => {
+    // Block body on purpose: a concise arrow would hand scrollTo's return
+    // value back to React as the cleanup function.
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }, [pathname])
   return null
 }
 
@@ -70,7 +75,7 @@ export function App() {
   }, [user, fetchCart, fetchWishlist, clear])
 
   return (
-    <>
+    <ErrorBoundary>
       <ScrollToTop />
       <Toaster />
       <Routes>
@@ -119,6 +124,6 @@ export function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </ErrorBoundary>
   )
 }

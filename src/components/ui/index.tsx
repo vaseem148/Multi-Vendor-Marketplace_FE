@@ -627,7 +627,10 @@ export function StatTile({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[13px] font-semibold text-muted">{label}</p>
-          <p className="mt-2 truncate text-2xl font-bold tracking-tight">{value}</p>
+          {/* Money can run long — let it shrink to fit rather than clip to an ellipsis. */}
+          <p className="mt-2 text-[clamp(1.125rem,1.7vw,1.5rem)] leading-tight font-bold tracking-tight tabular-nums">
+            {value}
+          </p>
           {hint && <p className="mt-1.5 text-xs text-subtle">{hint}</p>}
         </div>
         {icon && (
